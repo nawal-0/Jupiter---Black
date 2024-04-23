@@ -1,0 +1,1 @@
+extern int tsk_sensor(void);

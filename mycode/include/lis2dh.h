@@ -1,0 +1,1 @@
+extern void fetch_and_display(const struct device *sensor, double *xyz);

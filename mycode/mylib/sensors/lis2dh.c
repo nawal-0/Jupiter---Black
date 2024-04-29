@@ -48,6 +48,7 @@ extern void fetch_and_display(const struct device *sensor, double *xyz)
         xyz[0] = sensor_value_to_double(&accel[0]);
         xyz[1] = sensor_value_to_double(&accel[1]);
         xyz[2] = sensor_value_to_double(&accel[2]);
+        // printk()
     }
 }
 

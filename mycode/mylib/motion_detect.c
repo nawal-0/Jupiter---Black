@@ -105,9 +105,10 @@ extern int tsk_sensor(void)
         {
         case 0: // Fetch data from the CCS811 air quality sensor.
             fetch_and_display(lis3dh, xyz);
-            printk("%f, %f, %f", xyz[0], xyz[1], xyz[2]);
+            //printk("%f, %f, %f", xyz[0], xyz[1], xyz[2]);
+            printk("%d, %d, %d", (int)(xyz[0]), (int)(xyz[1]), (int)(xyz[2]));
             gpio_pin_toggle_dt(&led);
-            send_str(uart0, "hello");
+            // send_str(uart0, "hello");
             break;
             // case 1: // Fetch temperature data from the HTS221 sensor.
             //     process_mpu9250(mpu9250, motion);

@@ -13,7 +13,7 @@
 set(SNIPPET_NAMES "cdc-acm-console" "nordic-flpr" "nordic-flpr-xip" "nordic-ppr" "nordic-ppr-xip" "nus-console" "xen_dom0")
 # The paths to all the snippet.yml files. One snippet
 # can have multiple snippet.yml files.
-set(SNIPPET_PATHS "/root/csse4011/project/zephyr/snippets/cdc-acm-console/snippet.yml" "/root/csse4011/project/zephyr/snippets/nordic-flpr-xip/snippet.yml" "/root/csse4011/project/zephyr/snippets/nordic-flpr/snippet.yml" "/root/csse4011/project/zephyr/snippets/nordic-ppr-xip/snippet.yml" "/root/csse4011/project/zephyr/snippets/nordic-ppr/snippet.yml" "/root/csse4011/project/zephyr/snippets/nus-console/snippet.yml" "/root/csse4011/project/zephyr/snippets/xen_dom0/snippet.yml")
+set(SNIPPET_PATHS "/home/narwhal/Jupiter-Black/zephyr/snippets/cdc-acm-console/snippet.yml" "/home/narwhal/Jupiter-Black/zephyr/snippets/nordic-flpr-xip/snippet.yml" "/home/narwhal/Jupiter-Black/zephyr/snippets/nordic-flpr/snippet.yml" "/home/narwhal/Jupiter-Black/zephyr/snippets/nordic-ppr-xip/snippet.yml" "/home/narwhal/Jupiter-Black/zephyr/snippets/nordic-ppr/snippet.yml" "/home/narwhal/Jupiter-Black/zephyr/snippets/nus-console/snippet.yml" "/home/narwhal/Jupiter-Black/zephyr/snippets/xen_dom0/snippet.yml")
 
 # Create variable scope for snippets build variables
 zephyr_create_scope(snippets)

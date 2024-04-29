@@ -1,4 +1,4 @@
-# Install script for directory: /root/csse4011/project/modules/hal/st
+# Install script for directory: /home/narwhal/Jupiter-Black/modules/hal/st
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,11 +34,6 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/modules/hal_st/sensor/stmemsc/cmake_install.cmake")
+  set(CMAKE_OBJDUMP "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump")
 endif()
 

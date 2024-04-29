@@ -1,4 +1,4 @@
-# Install script for directory: /root/csse4011/project/zephyr/drivers
+# Install script for directory: /home/narwhal/Jupiter-Black/zephyr/drivers
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,86 +34,71 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump")
+  set(CMAKE_OBJDUMP "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/disk/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/disk/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/interrupt_controller/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/interrupt_controller/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/misc/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/misc/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/pcie/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/pcie/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/usb/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/usb/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/usb_c/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/usb_c/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/clock_control/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/clock_control/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/console/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/console/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/entropy/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/gpio/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/gpio/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/pinctrl/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/i2c/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/reset/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/pinctrl/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/serial/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/regulator/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/sensor/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/serial/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/root/csse4011/project/mycode/build/zephyr/drivers/timer/cmake_install.cmake")
+  include("/home/narwhal/Jupiter-Black/mycode/build/zephyr/drivers/timer/cmake_install.cmake")
 endif()
 

@@ -1,4 +1,4 @@
-set(CMAKE_C_COMPILER "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc")
+set(CMAKE_C_COMPILER "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc")
 set(CMAKE_C_COMPILER_ARG1 "")
 set(CMAKE_C_COMPILER_ID "GNU")
 set(CMAKE_C_COMPILER_VERSION "12.2.0")
@@ -21,11 +21,11 @@ set(CMAKE_C_SIMULATE_VERSION "")
 
 
 
-set(CMAKE_AR "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-ar")
-set(CMAKE_C_COMPILER_AR "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar")
-set(CMAKE_RANLIB "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-ranlib")
-set(CMAKE_C_COMPILER_RANLIB "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib")
-set(CMAKE_LINKER "/root/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/arm-zephyr-eabi/bin/ld.bfd")
+set(CMAKE_AR "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-ar")
+set(CMAKE_C_COMPILER_AR "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ar")
+set(CMAKE_RANLIB "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-ranlib")
+set(CMAKE_C_COMPILER_RANLIB "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc-ranlib")
+set(CMAKE_LINKER "/home/narwhal/zephyr_install/zephyr-sdk-0.16.5/arm-zephyr-eabi/arm-zephyr-eabi/bin/ld.bfd")
 set(CMAKE_MT "")
 set(CMAKE_COMPILER_IS_GNUCC 1)
 set(CMAKE_C_COMPILER_LOADED 1)

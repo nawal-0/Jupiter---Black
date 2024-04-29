@@ -1,1 +1,1 @@
-"mcuboot":"/root/csse4011/project/bootloader/mcuboot":"/root/csse4011/project/bootloader/mcuboot/boot/zephyr/sysbuild"
+"mcuboot":"/home/narwhal/Jupiter-Black/bootloader/mcuboot":"/home/narwhal/Jupiter-Black/bootloader/mcuboot/boot/zephyr/sysbuild"

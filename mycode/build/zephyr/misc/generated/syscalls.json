@@ -129,30 +129,6 @@
     ],
     [
         [
-            "void sys_rand_get",
-            "void *dst, size_t len"
-        ],
-        "random.h",
-        true
-    ],
-    [
-        [
-            "int sys_csrand_get",
-            "void *dst, size_t len"
-        ],
-        "random.h",
-        true
-    ],
-    [
-        [
-            "int entropy_get_entropy",
-            "const struct device *dev,\n\t\t\t\t  uint8_t *buffer,\n\t\t\t\t  uint16_t length"
-        ],
-        "entropy.h",
-        true
-    ],
-    [
-        [
             "int gpio_pin_interrupt_configure",
             "const struct device *port,\n\t\t\t\t\t   gpio_pin_t pin,\n\t\t\t\t\t   gpio_flags_t flags"
         ],
@@ -233,106 +209,34 @@
     ],
     [
         [
-            "int i2c_configure",
-            "const struct device *dev, uint32_t dev_config"
+            "int reset_status",
+            "const struct device *dev, uint32_t id, uint8_t *status"
         ],
-        "i2c.h",
+        "reset.h",
         true
     ],
     [
         [
-            "int i2c_get_config",
-            "const struct device *dev, uint32_t *dev_config"
+            "int reset_line_assert",
+            "const struct device *dev, uint32_t id"
         ],
-        "i2c.h",
+        "reset.h",
         true
     ],
     [
         [
-            "int i2c_transfer",
-            "const struct device *dev,\n\t\t\t   struct i2c_msg *msgs, uint8_t num_msgs,\n\t\t\t   uint16_t addr"
+            "int reset_line_deassert",
+            "const struct device *dev, uint32_t id"
         ],
-        "i2c.h",
+        "reset.h",
         true
     ],
     [
         [
-            "int i2c_recover_bus",
-            "const struct device *dev"
+            "int reset_line_toggle",
+            "const struct device *dev, uint32_t id"
         ],
-        "i2c.h",
-        true
-    ],
-    [
-        [
-            "int i2c_target_driver_register",
-            "const struct device *dev"
-        ],
-        "i2c.h",
-        true
-    ],
-    [
-        [
-            "int i2c_target_driver_unregister",
-            "const struct device *dev"
-        ],
-        "i2c.h",
-        true
-    ],
-    [
-        [
-            "int sensor_attr_set",
-            "const struct device *dev,\n\t\t\t      enum sensor_channel chan,\n\t\t\t      enum sensor_attribute attr,\n\t\t\t      const struct sensor_value *val"
-        ],
-        "sensor.h",
-        true
-    ],
-    [
-        [
-            "int sensor_attr_get",
-            "const struct device *dev,\n\t\t\t      enum sensor_channel chan,\n\t\t\t      enum sensor_attribute attr,\n\t\t\t      struct sensor_value *val"
-        ],
-        "sensor.h",
-        true
-    ],
-    [
-        [
-            "int sensor_sample_fetch",
-            "const struct device *dev"
-        ],
-        "sensor.h",
-        true
-    ],
-    [
-        [
-            "int sensor_sample_fetch_chan",
-            "const struct device *dev,\n\t\t\t\t       enum sensor_channel type"
-        ],
-        "sensor.h",
-        true
-    ],
-    [
-        [
-            "int sensor_channel_get",
-            "const struct device *dev,\n\t\t\t\t enum sensor_channel chan,\n\t\t\t\t struct sensor_value *val"
-        ],
-        "sensor.h",
-        true
-    ],
-    [
-        [
-            "int sensor_get_decoder",
-            "const struct device *dev,\n\t\t\t\t const struct sensor_decoder_api **decoder"
-        ],
-        "sensor.h",
-        true
-    ],
-    [
-        [
-            "int sensor_reconfigure_read_iodev",
-            "struct rtio_iodev *iodev, const struct device *sensor,\n\t\t\t\t\t    const enum sensor_channel *channels,\n\t\t\t\t\t    size_t num_channels"
-        ],
-        "sensor.h",
+        "reset.h",
         true
     ],
     [
@@ -2113,6 +2017,14 @@
     ],
     [
         [
+            "int entropy_get_entropy",
+            "const struct device *dev,\n\t\t\t\t  uint8_t *buffer,\n\t\t\t\t  uint16_t length"
+        ],
+        "entropy.h",
+        false
+    ],
+    [
+        [
             "int espi_config",
             "const struct device *dev, struct espi_cfg *cfg"
         ],
@@ -2553,6 +2465,54 @@
     ],
     [
         [
+            "int i2c_configure",
+            "const struct device *dev, uint32_t dev_config"
+        ],
+        "i2c.h",
+        false
+    ],
+    [
+        [
+            "int i2c_get_config",
+            "const struct device *dev, uint32_t *dev_config"
+        ],
+        "i2c.h",
+        false
+    ],
+    [
+        [
+            "int i2c_transfer",
+            "const struct device *dev,\n\t\t\t   struct i2c_msg *msgs, uint8_t num_msgs,\n\t\t\t   uint16_t addr"
+        ],
+        "i2c.h",
+        false
+    ],
+    [
+        [
+            "int i2c_recover_bus",
+            "const struct device *dev"
+        ],
+        "i2c.h",
+        false
+    ],
+    [
+        [
+            "int i2c_target_driver_register",
+            "const struct device *dev"
+        ],
+        "i2c.h",
+        false
+    ],
+    [
+        [
+            "int i2c_target_driver_unregister",
+            "const struct device *dev"
+        ],
+        "i2c.h",
+        false
+    ],
+    [
+        [
             "int i2s_configure",
             "const struct device *dev, enum i2s_dir dir,\n\t\t\t    const struct i2s_config *cfg"
         ],
@@ -2929,38 +2889,6 @@
     ],
     [
         [
-            "int reset_status",
-            "const struct device *dev, uint32_t id, uint8_t *status"
-        ],
-        "reset.h",
-        false
-    ],
-    [
-        [
-            "int reset_line_assert",
-            "const struct device *dev, uint32_t id"
-        ],
-        "reset.h",
-        false
-    ],
-    [
-        [
-            "int reset_line_deassert",
-            "const struct device *dev, uint32_t id"
-        ],
-        "reset.h",
-        false
-    ],
-    [
-        [
-            "int reset_line_toggle",
-            "const struct device *dev, uint32_t id"
-        ],
-        "reset.h",
-        false
-    ],
-    [
-        [
             "ssize_t retained_mem_size",
             "const struct device *dev"
         ],
@@ -3141,6 +3069,62 @@
             "const struct device *dev, int sources"
         ],
         "sdhc.h",
+        false
+    ],
+    [
+        [
+            "int sensor_attr_set",
+            "const struct device *dev,\n\t\t\t      enum sensor_channel chan,\n\t\t\t      enum sensor_attribute attr,\n\t\t\t      const struct sensor_value *val"
+        ],
+        "sensor.h",
+        false
+    ],
+    [
+        [
+            "int sensor_attr_get",
+            "const struct device *dev,\n\t\t\t      enum sensor_channel chan,\n\t\t\t      enum sensor_attribute attr,\n\t\t\t      struct sensor_value *val"
+        ],
+        "sensor.h",
+        false
+    ],
+    [
+        [
+            "int sensor_sample_fetch",
+            "const struct device *dev"
+        ],
+        "sensor.h",
+        false
+    ],
+    [
+        [
+            "int sensor_sample_fetch_chan",
+            "const struct device *dev,\n\t\t\t\t       enum sensor_channel type"
+        ],
+        "sensor.h",
+        false
+    ],
+    [
+        [
+            "int sensor_channel_get",
+            "const struct device *dev,\n\t\t\t\t enum sensor_channel chan,\n\t\t\t\t struct sensor_value *val"
+        ],
+        "sensor.h",
+        false
+    ],
+    [
+        [
+            "int sensor_get_decoder",
+            "const struct device *dev,\n\t\t\t\t const struct sensor_decoder_api **decoder"
+        ],
+        "sensor.h",
+        false
+    ],
+    [
+        [
+            "int sensor_reconfigure_read_iodev",
+            "struct rtio_iodev *iodev, const struct device *sensor,\n\t\t\t\t\t    const enum sensor_channel *channels,\n\t\t\t\t\t    size_t num_channels"
+        ],
+        "sensor.h",
         false
     ],
     [
@@ -4093,6 +4077,22 @@
             "const struct net_socket_service_desc *service,\n\t\t\t\t\t  struct zsock_pollfd *fds, int len, void *user_data"
         ],
         "socket_service.h",
+        false
+    ],
+    [
+        [
+            "void sys_rand_get",
+            "void *dst, size_t len"
+        ],
+        "random.h",
+        false
+    ],
+    [
+        [
+            "int sys_csrand_get",
+            "void *dst, size_t len"
+        ],
+        "random.h",
         false
     ],
     [

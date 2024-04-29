@@ -6,9 +6,9 @@
 # and/or the west manifest file.
 #
 # See the Modules guide for more information.
-"DTS_ROOT":"/root/csse4011/project/modules/hal/atmel"
-"DTS_ROOT":"/root/csse4011/project/modules/hal/espressif"
-"DTS_ROOT":"/root/csse4011/project/modules/hal/gigadevice"
-"DTS_ROOT":"/root/csse4011/project/modules/hal/nuvoton"
-"DTS_ROOT":"/root/csse4011/project/modules/hal/nxp"
-"DTS_ROOT":"/root/csse4011/project/modules/hal/stm32"
+"DTS_ROOT":"/home/narwhal/Jupiter-Black/modules/hal/atmel"
+"DTS_ROOT":"/home/narwhal/Jupiter-Black/modules/hal/espressif"
+"DTS_ROOT":"/home/narwhal/Jupiter-Black/modules/hal/gigadevice"
+"DTS_ROOT":"/home/narwhal/Jupiter-Black/modules/hal/nuvoton"
+"DTS_ROOT":"/home/narwhal/Jupiter-Black/modules/hal/nxp"
+"DTS_ROOT":"/home/narwhal/Jupiter-Black/modules/hal/stm32"

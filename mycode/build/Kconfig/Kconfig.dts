@@ -1262,6 +1262,11 @@ DT_COMPAT_BRCM_BCM2711_GPIO := brcm,bcm2711-gpio
 config DT_HAS_BRCM_BCM2711_GPIO_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_BRCM_BCM2711_GPIO))
 
+DT_COMPAT_BRCM_BRCMSTB_GPIO := brcm,brcmstb-gpio
+
+config DT_HAS_BRCM_BRCMSTB_GPIO_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_BRCM_BRCMSTB_GPIO))
+
 DT_COMPAT_BRCM_IPROC_PAX_DMA_V1 := brcm,iproc-pax-dma-v1
 
 config DT_HAS_BRCM_IPROC_PAX_DMA_V1_ENABLED
@@ -2512,6 +2517,11 @@ DT_COMPAT_INTEL_SOCFPGA_RESET := intel,socfpga-reset
 config DT_HAS_INTEL_SOCFPGA_RESET_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_INTEL_SOCFPGA_RESET))
 
+DT_COMPAT_INTEL_SSP := intel,ssp
+
+config DT_HAS_INTEL_SSP_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_INTEL_SSP))
+
 DT_COMPAT_INTEL_SSP_DAI := intel,ssp-dai
 
 config DT_HAS_INTEL_SSP_DAI_ENABLED
@@ -2701,6 +2711,11 @@ DT_COMPAT_ITE_IT8XXX2_SHA := ite,it8xxx2-sha
 
 config DT_HAS_ITE_IT8XXX2_SHA_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_ITE_IT8XXX2_SHA))
+
+DT_COMPAT_ITE_IT8XXX2_SHA_V2 := ite,it8xxx2-sha-v2
+
+config DT_HAS_ITE_IT8XXX2_SHA_V2_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_ITE_IT8XXX2_SHA_V2))
 
 DT_COMPAT_ITE_IT8XXX2_SHI := ite,it8xxx2-shi
 
@@ -3467,6 +3482,11 @@ DT_COMPAT_MURATA_NCP15WB473 := murata,ncp15wb473
 config DT_HAS_MURATA_NCP15WB473_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_MURATA_NCP15WB473))
 
+DT_COMPAT_MURATA_NCP15XH103 := murata,ncp15xh103
+
+config DT_HAS_MURATA_NCP15XH103_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_MURATA_NCP15XH103))
+
 DT_COMPAT_NEORV32_CPU := neorv32-cpu
 
 config DT_HAS_NEORV32_CPU_ENABLED
@@ -4116,6 +4136,11 @@ DT_COMPAT_NUVOTON_NPCX_I2C_PORT := nuvoton,npcx-i2c-port
 
 config DT_HAS_NUVOTON_NPCX_I2C_PORT_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_NUVOTON_NPCX_I2C_PORT))
+
+DT_COMPAT_NUVOTON_NPCX_I3C := nuvoton,npcx-i3c
+
+config DT_HAS_NUVOTON_NPCX_I3C_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_NUVOTON_NPCX_I3C))
 
 DT_COMPAT_NUVOTON_NPCX_ITIM_TIMER := nuvoton,npcx-itim-timer
 
@@ -5422,6 +5447,11 @@ DT_COMPAT_ONNN_NCP5623 := onnn,ncp5623
 config DT_HAS_ONNN_NCP5623_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_ONNN_NCP5623))
 
+DT_COMPAT_ONNN_NCT75 := onnn,nct75
+
+config DT_HAS_ONNN_NCT75_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_ONNN_NCT75))
+
 DT_COMPAT_OPENCORES_SPI_SIMPLE := opencores,spi-simple
 
 config DT_HAS_OPENCORES_SPI_SIMPLE_ENABLED
@@ -5561,6 +5591,11 @@ DT_COMPAT_PIXART_PAT912X := pixart,pat912x
 
 config DT_HAS_PIXART_PAT912X_ENABLED
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_PIXART_PAT912X))
+
+DT_COMPAT_PIXART_PAW32XX := pixart,paw32xx
+
+config DT_HAS_PIXART_PAW32XX_ENABLED
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_PIXART_PAW32XX))
 
 DT_COMPAT_PIXART_PMW3610 := pixart,pmw3610
 

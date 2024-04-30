@@ -1,25 +1,23 @@
-import React, { useEffect } from 'react';
-//const SerialPort = require('serialport');
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
+const socket = io('http://localhost:3001');
 
 export default function Home() {
-    // useEffect(() => {
-    //     const port = new SerialPort('/dev/ttyACM0', {
-    //         baudRate: 9600
-    //     });
-    //     port.on('data', (data) => {
-    //         console.log('Data:', data.toString());
-    //     });
-
-    //     return () => {
-    //         port.close();
-    //     };
-    // }, []);
+    const [data, setData] = useState('hello');
+    useEffect(() => {
+        socket.on('serialData', (data) => {
+            setData(data);
+            console.log('Data received from server:', data);
+        });
+    }, []);
 
     return (
         <div>
         <main>
         <h1 className='title'>Home</h1>
+        <h2>{data}</h2>
+
         </main>
         </div>
     );

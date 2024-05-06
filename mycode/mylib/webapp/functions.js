@@ -15,12 +15,12 @@ const io = socketIo(server, {
   },
 });
 
-const portName = '/dev/ttyACM0'; // Change this to your serial port name
+const portName = '/dev/ttyACM0'; 
 const port = new SerialPort({path: portName,  baudRate: 115200 });
 const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
 
 parser.on('data', (data) => {
-  console.log('Data received from serial port:', data);
+  //console.log('Data received from serial port:', data);
   io.emit('serialData', data);
 });
 

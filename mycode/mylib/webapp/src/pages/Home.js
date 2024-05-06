@@ -17,10 +17,14 @@ export default function Home() {
     return (
         <div>
         <main>
-        <h1 className='title'>Home</h1>
+        <h1 className='title'>Activity Classification</h1>
         <h2>{data}</h2>
-        <ActivityIcon image={icons.standImage} data={data} />
-        <ActivityIcon image={icons.runImage} data={data} />
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <ActivityIcon image={icons.sitImage} encoding={"0000"} data={data} />
+        <ActivityIcon image={icons.standImage} encoding={"LED state: ON"} data={data} />
+        <ActivityIcon image={icons.walkImage} encoding={"0010"} data={data} />
+        <ActivityIcon image={icons.runImage} encoding={"0011"} data={data} />
+        </div>
 
 
 

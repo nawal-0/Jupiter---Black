@@ -7,7 +7,7 @@ import './data/styles.css';
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div>
         <HeaderFooter />
       </div>
 

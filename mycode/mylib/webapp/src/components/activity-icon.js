@@ -11,7 +11,7 @@ function ActivityIcon({image, encoding, data}) {
         }
     }, [data]);
 
-    const imStyle = {
+    const iconStyle = {
         opacity: opacity,
         borderRadius: '20px',
         height: '450px',
@@ -19,7 +19,7 @@ function ActivityIcon({image, encoding, data}) {
     };
     return (
         <div>
-            <img src={image} alt="activity icon" style={imStyle}/>
+            <img src={image} alt="activity icon" style={iconStyle}/>
           
         </div>
     );

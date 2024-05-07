@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import ActivityIcon from '../components/activityIcon';
-import icons from '../icons';
+import ActivityIcon from '../components/activity-icon';
+import icons from '../data/icons';
 
 const socket = io('http://localhost:3001');
 

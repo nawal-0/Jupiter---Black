@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function ActivityIcon({image, encoding, data}) {
-    const [opacity, setOpacity] = useState(0.5);
+    const [opacity, setOpacity] = useState(0.3);
 
     useEffect(() => {
         if (data.trim() == encoding) {

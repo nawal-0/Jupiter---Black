@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from 'styled-components';
 
 const Button = styled.button`
     background-color: #0d273b;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 25px 72px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 4px 10px;
     cursor: pointer;
     border-radius: 8px;
     &:hover {
@@ -18,10 +18,11 @@ const Button = styled.button`
     }
 `;
 
-function CustomButton({text}) {
+function CustomButton({text, socket}) {
 
     const onClick = () => {
-        console.log('Button clicked');
+        //console.log('Button clicked');
+        socket.emit('buttonClicked', text + '\n');
     }
 
     return (

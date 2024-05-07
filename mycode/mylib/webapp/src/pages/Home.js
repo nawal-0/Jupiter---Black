@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import Divider from '@mui/material/Divider';
 import io from 'socket.io-client';
 import ActivityIcon from '../components/activity-icon';
 import CustomButton from '../components/custom-button';
@@ -31,13 +31,13 @@ export default function Home() {
                     <ActivityIcon image={icons.runImage} encoding={"0011"} data={data} />
                 </div>
             </div>
-
+            <Divider orientation='vertical' flexItem />
             <div className='right-container'>
                 <div className='button-container'>
-                    <CustomButton text="Start" />
-                    <CustomButton text="Stop" />
+                    <CustomButton text="Start" socket={socket}/>
+                    <CustomButton text="Stop" socket={socket} />
                 </div>
-
+                <Divider flexItem />
                 <div className='info-container'>
                     <h2>Activity Information</h2>
                 </div>

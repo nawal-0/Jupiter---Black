@@ -24,6 +24,13 @@ parser.on('data', (data) => {
   io.emit('serialData', data);
 });
 
+io.on('connection', (socket) => {
+  socket.on('buttonClicked', (data) => {
+    console.log('Button clicked:', data);
+    port.write(data);
+  });
+});
+
 server.listen(3001, () => {
   console.log('Server is running on port 3001');
 });

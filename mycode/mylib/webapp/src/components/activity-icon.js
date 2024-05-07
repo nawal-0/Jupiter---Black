@@ -13,9 +13,10 @@ function ActivityIcon({image, encoding, data}) {
 
     const iconStyle = {
         opacity: opacity,
-        borderRadius: '20px',
-        height: '450px',
+        borderRadius: '30px',
+        height: '350px',
         width: 'auto',
+        padding: '10px',
     };
     return (
         <div>

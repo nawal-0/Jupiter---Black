@@ -50,7 +50,7 @@ static void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
     // 	return;
     // }
 
-    printk("Device found: %s (RSSI %d)\n", addr_str, rssi);
+    // printk("Device found: %s (RSSI %d)\n", addr_str, rssi);
 
     // Extract specific bytes from the advertisement data which represent sensor data.
     uint8_t bit1 = ad->data[ad->len - 5];
@@ -98,7 +98,7 @@ static void device_found_filter(const bt_addr_le_t *addr, int8_t rssi, uint8_t t
     // Combine three bytes into a single integer value representing the sensor data.
     manufact_data = bit1 << 24 | bit2 << 16 | bit3 << 8 | bit4;
 
-    printk("Device found: %s (RSSI %d)\n", addr_str, rssi);
+    // printk("Device found: %s (RSSI %d)\n", addr_str, rssi);
 
     // If bt_le_scan_stop() is called on shell, stop scanning
     if (bt_le_scan_stop())

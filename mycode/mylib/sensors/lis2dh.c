@@ -9,7 +9,7 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
 
-extern void fetch_and_display(const struct device *sensor, double *xyz)
+extern void fetch_and_display(const struct device *sensor, int *xyz)
 {
     static unsigned int count;
     struct sensor_value accel[3];
@@ -45,9 +45,15 @@ extern void fetch_and_display(const struct device *sensor, double *xyz)
         //        sensor_value_to_double(&accel[0]),
         //        sensor_value_to_double(&accel[1]),
         //        sensor_value_to_double(&accel[2]));
-        xyz[0] = sensor_value_to_double(&accel[0]);
-        xyz[1] = sensor_value_to_double(&accel[1]);
-        xyz[2] = sensor_value_to_double(&accel[2]);
+        // xyz[0] = sensor_value_to_double(&accel[0]);
+        // xyz[1] = sensor_value_to_double(&accel[1]);
+        // xyz[2] = sensor_value_to_double(&accel[2]);
+        xyz[0] = accel[0].val1;
+        xyz[1] = accel[0].val2;
+        xyz[2] = accel[1].val1;
+        xyz[3] = accel[1].val2;
+        xyz[4] = accel[2].val1;
+        xyz[5] = accel[2].val2;
         // printk()
     }
 }

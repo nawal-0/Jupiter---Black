@@ -30,7 +30,7 @@ static const char *now_str(void)
     return buf;
 }
 
-extern void process_mpu9250(const struct device *dev, double *buffer)
+extern void process_mpu9250(const struct device *dev, int *buffer)
 {
     struct sensor_value temperature;
     struct sensor_value accel[3];
@@ -78,22 +78,22 @@ extern void process_mpu9250(const struct device *dev, double *buffer)
     }
 }
 
-#ifdef CONFIG_MPU6050_TRIGGER
-static struct sensor_trigger trigger;
+// #ifdef CONFIG_MPU6050_TRIGGER
+// static struct sensor_trigger trigger;
 
-static void handle_mpu6050_drdy(const struct device *dev,
-                                const struct sensor_trigger *trig)
-{
-    int rc = process_mpu6050(dev);
+// static void handle_mpu6050_drdy(const struct device *dev,
+//                                 const struct sensor_trigger *trig)
+// {
+//     int rc = process_mpu6050(dev);
 
-    if (rc != 0)
-    {
-        printf("cancelling trigger due to failure: %d\n", rc);
-        (void)sensor_trigger_set(dev, trig, NULL);
-        return;
-    }
-}
-#endif /* CONFIG_MPU6050_TRIGGER */
+//     if (rc != 0)
+//     {
+//         printf("cancelling trigger due to failure: %d\n", rc);
+//         (void)sensor_trigger_set(dev, trig, NULL);
+//         return;
+//     }
+// }
+// #endif /* CONFIG_MPU6050_TRIGGER */
 
 // int main(void)
 // {

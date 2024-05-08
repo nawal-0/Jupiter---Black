@@ -30,7 +30,7 @@ struct data_ibeacon
     uint8_t major_2;
     uint8_t minor_1;
     uint8_t minor_2;
-    uint8_t rssi;
+    // uint8_t rssi;
 };
 
 int major_list[8] = {2753, 32975, 26679, 41747, 30679, 6195, 30525, 57395};
@@ -64,55 +64,55 @@ static const struct bt_data ad[] = {
     BT_DATA(BT_DATA_MANUFACTURER_DATA, mfg_data, sizeof(mfg_data))};
 
 // Main task for BLE advertising of iBeacon data.
-extern int tsk_ibeacon(void)
-{
-    int err;
+// extern int tsk_ibeacon(void)
+// {
+//     int err;
 
-    // bt_addr_le_t *addr_le = malloc(sizeof(struct bt_addr_le_t));
-    bt_addr_le_t addr_le;
+//     // bt_addr_le_t *addr_le = malloc(sizeof(struct bt_addr_le_t));
+//     bt_addr_le_t addr_le;
 
-    // Enable Bluetooth subsystem.
-    err = bt_enable(NULL);
+//     // Enable Bluetooth subsystem.
+//     err = bt_enable(NULL);
 
-    // Start non-connectable advertising.
-    bt_le_adv_start(BT_LE_ADV_NCONN, ad, ARRAY_SIZE(ad), NULL, 0);
+//     // Start non-connectable advertising.
+//     bt_le_adv_start(BT_LE_ADV_NCONN, ad, ARRAY_SIZE(ad), NULL, 0);
 
-    // Infinite loop to handle advertising data updates.
-    while (1)
-    {
-        struct data_ibeacon data;
+//     // Infinite loop to handle advertising data updates.
+//     while (1)
+//     {
+//         struct data_ibeacon data;
 
-        // Attempt to fetch new data from the message queue without waiting.
-        if (k_msgq_get(&ibeacon_msgq, &data, K_NO_WAIT) == 0)
-        {
+//         // Attempt to fetch new data from the message queue without waiting.
+//         if (k_msgq_get(&ibeacon_msgq, &data, K_NO_WAIT) == 0)
+//         {
 
-            // Update the data field to send sensor value and device id.
-            mfg_data[DATA_OFFSET] = data.major_1;
-            mfg_data[DATA_OFFSET + 1] = data.major_2;
-            mfg_data[DATA_OFFSET + 2] = data.minor_1;
-            mfg_data[DATA_OFFSET + 3] = data.minor_2;
-            mfg_data[DATA_OFFSET + 4] = data.rssi;
+//             // Update the data field to send sensor value and device id.
+//             mfg_data[DATA_OFFSET] = data.major_1;
+//             mfg_data[DATA_OFFSET + 1] = data.major_2;
+//             mfg_data[DATA_OFFSET + 2] = data.minor_1;
+//             mfg_data[DATA_OFFSET + 3] = data.minor_2;
+//             mfg_data[DATA_OFFSET + 4] = data.rssi;
 
-            if (err)
-            {
-                return 0;
-            }
+//             if (err)
+//             {
+//                 return 0;
+//             }
 
-            // Update the advertising data with the new payload.
-            bt_le_adv_update_data(ad, ARRAY_SIZE(ad), NULL, 0);
+//             // Update the advertising data with the new payload.
+//             bt_le_adv_update_data(ad, ARRAY_SIZE(ad), NULL, 0);
 
-            // Check for errors in updating advertising data and handle them.
-            if (err)
-            {
-                printk("Advertising failed to start (err %d)\n", err);
-                return 0;
-            }
-        }
+//             // Check for errors in updating advertising data and handle them.
+//             if (err)
+//             {
+//                 printk("Advertising failed to start (err %d)\n", err);
+//                 return 0;
+//             }
+//         }
 
-        // Sleep for 500ms before attempting the next operation.
-        k_msleep(50);
-    }
-}
+//         // Sleep for 500ms before attempting the next operation.
+//         k_msleep(50);
+//     }
+// }
 
 static void scan_init_mobile()
 {
@@ -175,7 +175,7 @@ extern int tsk_scan(void)
         data.major_2 = (val & 0xff0000) >> 16;
         data.minor_1 = (val & 0xff00) >> 8;
         data.minor_2 = val & 0xff;
-        data.rssi = get_rssi_data();
+        // data.rssi = get_rssi_data();
 
         bt_le_scan_stop();
         //  index++;

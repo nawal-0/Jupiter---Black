@@ -1,1 +1,1 @@
-extern void process_mpu9250(const struct device *dev, double *buffer);
+extern void process_mpu9250(const struct device *dev, int *buffer);

@@ -19,6 +19,7 @@
 #define DATA_OFFSET 20
 
 // #define STATIC_ADDR [6] { 0x11, 0x22, 0x33, 0x44, 0x55, 0x66 };
+static char *actions[4] = {"stand", "walk", "run", "sit"};
 
 bt_addr_le_t static_addr;
 
@@ -47,7 +48,7 @@ K_MSGQ_DEFINE(ibeacon_msgq, sizeof(struct data_ibeacon), 10, 4);
 static uint8_t mfg_data[] = {
     0x4c, 0x00,                         /* Apple */
     0x02, 0x15,                         /* iBeacon */
-    0x18, 0xaa, 0x13, 0x26,             /* UUID[15..12] */
+    0x18, 0xbb, 0x13, 0x26,             /* UUID[15..12] */
     0x01, 0x6b,                         /* UUID[11..10] */
     0x4b, 0xec,                         /* UUID[9..8] */
     0xad, 0x96,                         /* UUID[7..6] */
@@ -70,9 +71,19 @@ extern int tsk_ibeacon(void)
 
     // Enable Bluetooth subsystem.
     err = bt_enable(NULL);
+    if (err)
+    {
+        printk("Bluetooth initialization failed (err %d)\n", err);
+        return 0;
+    }
 
     // Start non-connectable advertising.
-    bt_le_adv_start(BT_LE_ADV_NCONN, ad, ARRAY_SIZE(ad), NULL, 0);
+    err = bt_le_adv_start(BT_LE_ADV_NCONN, ad, ARRAY_SIZE(ad), NULL, 0);
+    if (err)
+    {
+        printk("Advertising failed to start (err %d)\n", err);
+        return 0;
+    }
 
     // Infinite loop to handle advertising data updates.
     while (1)
@@ -106,7 +117,55 @@ extern int tsk_ibeacon(void)
         }
 
         // Sleep for 500ms before attempting the next operation.
-        k_msleep(50);
+        k_msleep(1000);
+    }
+}
+
+void cmd_dev_power(const struct shell *sh, size_t argc, char **argv)
+{
+
+    if (argc != 2)
+    {
+        printk("invalid number of arguments");
+        return;
+    }
+    int encode = -1;
+    struct data_ibeacon data;
+    if (argv[1][0] == 'o' && argv[1][1] == 'n')
+    {
+        encode = 1;
+    }
+    else if (argv[1][0] == 'o' && argv[1][1] == 'f' && argv[1][2] == 'f')
+    {
+        encode = 0;
+    }
+    if (encode > -1)
+    {
+        data.major_2 = 1;
+        data.minor_2 = encode;
+        while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+        {
+            // If the queue is full, wait for 500ms before trying again.
+            k_sleep(K_MSEC(500));
+        }
+    }
+}
+
+void cmd_send_weight(const struct shell *sh, size_t argc, char **argv)
+{
+
+    if (argc != 2)
+    {
+        printk("invalid number of arguments");
+        return;
+    }
+    struct data_ibeacon data;
+    data.major_2 = 2;
+    data.minor_2 = atoi(argv[1]);
+    while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+    {
+        // If the queue is full, wait for 500ms before trying again.
+        k_sleep(K_MSEC(500));
     }
 }
 
@@ -146,7 +205,8 @@ extern int tsk_scan(void)
     // Continuously process messages from the BLE message queue.
     while (1)
     {
-        // start_scan();
+        start_scan();
+        k_sleep(K_MSEC(500));
 
         // Get majior & minor number received
         int val = get_manufact_data();
@@ -156,7 +216,7 @@ extern int tsk_scan(void)
         data.minor_2 = val & 0xff;
         // data.rssi = get_rssi_data();
 
-        // bt_le_scan_stop();
+        bt_le_scan_stop();
         //   index++;
         //   index = index % 8;
         //   printk("index %d", index);
@@ -173,8 +233,12 @@ extern int tsk_scan(void)
         //     // If the queue is full, wait for 500ms before trying again.
         //     k_sleep(K_MSEC(500));
         // }
-        printk("state :%d\n", data.minor_2);
+        // printk("state :%d\n", data.major_2);
+        if (0 < data.major_2 && data.major_2 < 3)
+        {
+            printk("state %s\n", actions[data.major_2]);
+        }
 
-        k_sleep(K_MSEC(1000));
+        k_sleep(K_MSEC(500));
     }
 }

@@ -15,6 +15,7 @@
 // #include "mpu9250.h"
 #include "lis2dh.h"
 #include "uart.h"
+#include "speaker.h"
 
 #define LED0_NODE DT_ALIAS(led1)
 #define DATA_OFFSET 20
@@ -29,6 +30,10 @@ static int train_x[] = {15, 22, 16, 13, 10, 10, 9, 8, 8, 7, 6, 3, 4, 4, 4, 4, 5,
 static int train_y[] = {22, 22, 24, 23, 23, 22, 21, 21, 22, 22, 22, 22, 19, 20, 20, 20, 22, 22, 21, 21, 44, 51, 52, 51, 55, 55, 60, 59, 63, 66, 48, 53, 70, 73, 70, 73, 73, 89, 106, 111, 109, 109, 119, 174, 221, 302, 360, 361, 345, 341, 336, 341, 342, 325, 344, 286, 229, 233, 227, 225};
 static int train_z[] = {15, 15, 20, 18, 16, 14, 13, 12, 12, 12, 11, 10, 9, 10, 9, 10, 9, 11, 12, 11, 14, 14, 14, 12, 16, 22, 23, 24, 31, 40, 46, 52, 55, 56, 60, 57, 65, 65, 79, 75, 73, 75, 72, 77, 130, 185, 180, 251, 290, 288, 285, 321, 333, 361, 372, 350, 354, 299, 252, 279};
 static int train_activity[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+static int energy_calac = 0;
+static int stand = 0;
+static int weight;
+static char *actions[4] = {"stand", "walk", "run", "sit"};
 
 static uint8_t mfg_data[] = {
     0x4c, 0x00,                         /* Apple */
@@ -72,6 +77,8 @@ extern int tsk_ibeacon(void)
     // Start non-connectable advertising.
     bt_le_adv_start(BT_LE_ADV_NCONN, ad, ARRAY_SIZE(ad), NULL, 0);
 
+    // speaker_activate();
+
     // Infinite loop to handle advertising data updates.
     while (1)
     {
@@ -103,6 +110,7 @@ extern int tsk_ibeacon(void)
                 return 0;
             }
         }
+        // speaker_activate();
 
         // Sleep for 500ms before attempting the next operation.
         k_msleep(1000);
@@ -217,6 +225,25 @@ static int format_sensor_val_x(int real, int decimal)
     return val;
 }
 
+static int format_sensor_val_x_sign(int real, int decimal)
+{
+    int val;
+    real = real - 10;
+    if (decimal > 0)
+    {
+        val = real * 100 + (decimal / 10000);
+    }
+    else if (decimal < 0 && real == 0)
+    {
+        val = (decimal / 10000);
+    }
+    else if (decimal < 0)
+    {
+        val = real * 100 + (decimal * -1 / 10000);
+    }
+    return val;
+}
+
 // Task for fetching sensor data and preparing it for BLE advertising.
 extern int tsk_sensor(void)
 {
@@ -232,29 +259,24 @@ extern int tsk_sensor(void)
         printf("Device %s is not ready\n", lis3dh->name);
         return 0;
     }
-
-    // const struct device *const mpu9250 = DEVICE_DT_GET_ONE(invensense_mpu6050);
-
-    // if (!device_is_ready(mpu9250))
-    // {
-    //     printf("Device %s is not ready\n", mpu9250->name);
-    //     return 0;
-    // }
-    // int dev_state_fsm = 0; // State variable for FSM handling sensor reading.
     int *xyz = malloc(6 * sizeof(double));
     // int *motion = malloc(12 * sizeof(double));
     int count = 0;
     // sys_slist_init(&sl_list);
     struct data_ibeacon data;
     int x;
+    int x_pol;
     int y;
     int z;
     int x_total = 0;
+    int x_pol_total = 0;
     int y_total = 0;
     int z_total = 0;
     int x_avg = 0;
+    int x_pol_avg = 0;
     int y_avg = 0;
     int z_avg = 0;
+    int prev_states[3] = {0, 0, 0};
 
     // Infinite loop for continuous sensor data reading and processing.
     while (1)
@@ -266,13 +288,15 @@ extern int tsk_sensor(void)
         // printk("lis2dh: %d.%d, %d.%d, %d.%d\n", xyz[0], decimal_abs(xyz[1]), xyz[2], decimal_abs(xyz[3]), xyz[4], decimal_abs(xyz[5]));
 
         x = format_sensor_val_x(xyz[0], xyz[1]);
+        x_pol = format_sensor_val_x_sign(xyz[0], xyz[1]);
         y = format_sensor_val(xyz[2], xyz[3]);
         z = format_sensor_val(xyz[4], xyz[5]);
         // printk("x: %d, y: %d, z: %d\n", x, y, z);
-        printk("%d, %d, %d\n", x, y, z);
+        // printk("%d, %d, %d\n", x, y, z);
         if (count < 10)
         {
             x_total += x;
+            x_pol_total += x_pol;
             y_total += y;
             z_total += z;
             count += 1;
@@ -282,47 +306,119 @@ extern int tsk_sensor(void)
             gpio_pin_toggle_dt(&led);
             count = 1;
             x_total += x;
+            x_pol_total += x_pol;
             y_total += y;
             z_total += z;
             x_avg = x_total / 10;
+            x_pol_avg = x_pol_total / 10;
             y_avg = y_total / 10;
             z_avg = z_total / 10;
-            data.minor_2 = k_NN_classify(x_avg, y_avg, z_avg);
+            int current = k_NN_classify(x_avg, y_avg, z_avg);
+            prev_states[2] = prev_states[1];
+            prev_states[1] = prev_states[0];
+            prev_states[0] = current;
+            if (prev_states[2] == 0 && current == 0 && x_pol_avg < -30)
+            {
+                stand = 0;
+            }
+            else if (prev_states[2] == 0 && current == 0 && x_pol_avg > 30)
+            {
+                stand = 3;
+            }
             data.major_1 = 0;
-            data.major_2 = 0;
-            data.minor_1 = 0;
-            printk("class: %d\n", data.minor_2);
+            if (current == 0)
+            {
+                data.major_2 = current + stand;
+            }
+            else
+            {
+                data.major_2 = current;
+            }
+
+            if (energy_calac)
+            {
+                int energy = ((weight * 9 * x_total) / 10 + weight * (x_total * z_total)) / 100;
+                // printk("energy: %d\n", energy);
+                data.minor_1 = energy & 0xFFFF >> 8;
+                data.minor_2 = energy & 0xFF;
+            }
+            else
+            {
+                data.minor_1 = 0;
+                data.minor_2 = 0;
+            }
+
+            // printk("class: %d\n", data.major_2);
+            printk("state %s\n", actions[data.major_2]);
+            printk("x pol: %d\n", x_pol_avg);
             while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
             {
                 // If the queue is full, wait for 500ms before trying again.
                 k_sleep(K_MSEC(500));
             }
             x_total = 0;
+            x_pol_total = 0;
             y_total = 0;
             z_total = 0;
         }
-
-        // printk("lis2dh: %f, %f, %f\n", xyz[0] + xyz[1] /1000000, xyz[2] + xyz[3] /1000000, xyz[4] + xyz[5] /1000000);
-        //  send_str(uart0, "hello");
-        //  Fetch temperature data from the HTS221 sensor.
-        //  process_mpu9250(mpu9250, motion);
-        //  printk("mpu9250: accel %d.%d %d.%d %d.%d m/s/s, gyro  %d.%d %d.%d %d.%d rad/s\n",
-        //                 motion[0], motion[1], motion[2], motion[3], motion[4], motion[5],motion[6], motion[7], motion[8], motion[9], motion[10], motion[11]);
-
-        // dev_state_fsm++;
-        // dev_state_fsm = dev_state_fsm % 2;
-
-        // if (count < 50)
-        // {
-        //     count++;
-        //     k_msleep(1000);
-        // }
-        // else
-        // {
-        //     count = 0;
-        //     k_msleep(1000);
-        // }
         k_msleep(100);
     }
     return 0;
+}
+
+extern int tsk_scan(void)
+{
+    int err;
+    err = bt_enable(NULL);
+
+    // Initialize the Bluetooth subsystem with no parameters.
+    // err = bt_enable(NULL);
+    // if (err) // Check if there was an error initializing Bluetooth.
+    // {
+    //     printk("Bluetooth init failed (err %d)\n", err);
+    //     return 0;
+    // }
+
+    struct data_ibeacon data;
+    int index = 0;
+
+    // scan_init_mobile();
+    //  start_scan_filter();
+    // start_scan();
+
+    // Continuously process messages from the BLE message queue.
+    while (1)
+    {
+        // start_scan();
+
+        // Get majior & minor number received
+        int val = get_manufact_data();
+        data.major_1 = val >> 24;
+        data.major_2 = (val & 0xff0000) >> 16;
+        data.minor_1 = (val & 0xff00) >> 8;
+        data.minor_2 = val & 0xff;
+        // data.rssi = get_rssi_data();
+
+        // bt_le_scan_stop();
+        //   index++;
+        //   index = index % 8;
+        //   printk("index %d", index);
+
+        // if (val >> 16 == major_list[index])
+        // if (val >> 16 == major_list[index])
+        // {
+        //     index++;
+        //     index = index % 8;
+        // printk
+        // Attempt to send the data to the iBeacon message queue for advertising.
+        // while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+        // {
+        //     // If the queue is full, wait for 500ms before trying again.
+        //     k_sleep(K_MSEC(500));
+        // }
+        // printk("state :%d\n", data.minor_2);
+        // printk("state %s\n", actions[data.major_2]);
+
+        k_sleep(K_MSEC(1000));
+    }
 }

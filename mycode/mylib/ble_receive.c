@@ -28,7 +28,21 @@ int8_t rssi_data = 50;
 
 LOG_MODULE_REGISTER(ble_central);
 
+uint8_t uuid[16] = {0x18, 0xaa, 0x13, 0x26, 0x01, 0x6b, 0x4b, 0xec, 0xad, 0x96, 0xbc, 0xb9, 0x6d, 0x16, 0x6e, 0x97};
+
 // Callback function for handling discovered Bluetooth devices during a scan.
+static int filter_addr(uint8_t *arr)
+{
+    for (int i = 0; i < 6; i++)
+    {
+        if (uuid[i] != arr[i + 9])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 static void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
                          struct net_buf_simple *ad)
 {
@@ -47,10 +61,15 @@ static void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
     // Filter out week signals.
     // if (rssi < -50)
     // {
-    // 	return;
+    //     return;
     // }
 
     // printk("Device found: %s (RSSI %d)\n", addr_str, rssi);
+    if (!filter_addr(ad->data))
+    {
+        // printk("uuid: %x:%x:%x", ad->data[8], ad->data[9], ad->data[10]);
+        return;
+    }
 
     // Extract specific bytes from the advertisement data which represent sensor data.
     uint8_t bit1 = ad->data[ad->len - 5];

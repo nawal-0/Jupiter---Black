@@ -47,15 +47,15 @@ LOG_MODULE_REGISTER(main);
 // SHELL_CMD_REGISTER(led, &led_handler, "LED handler", NULL);
 // SHELL_CMD_REGISTER(time, NULL, "timer display", &cmd_time);
 SHELL_CMD_REGISTER(mobile_addr, NULL, "register address", &cmd_reg_mobile);
-// SHELL_CMD_REGISTER(add_node, NULL, "add node", &add_node);
-// SHELL_CMD_REGISTER(remove_node, NULL, "remove node", &remove_node);
+SHELL_CMD_REGISTER(dev_power, NULL, "device power", &cmd_dev_power);
+SHELL_CMD_REGISTER(send_weight, NULL, "send weight", &cmd_send_weight);
 // SHELL_CMD_REGISTER(view_node, NULL, "view node", &view_node);
 
 // Register thread
 // K_THREAD_DEFINE(led_id, STACKSIZE, thread_led, NULL, NULL, NULL,
 //                 PRIORITY, 0, 0);
-// K_THREAD_DEFINE(send_id, STACKSIZE, send_data, NULL, NULL, NULL,
-//                 PRIORITY, 0, 0);
+K_THREAD_DEFINE(send_id, STACKSIZE, tsk_ibeacon, NULL, NULL, NULL,
+                PRIORITY, 0, 0);
 // K_THREAD_DEFINE(receive_id, STACKSIZE, receive_data, NULL, NULL, NULL,
 //                 PRIORITY, 0, 0);
 K_THREAD_DEFINE(receive_id, STACKSIZE, tsk_scan, NULL, NULL, NULL,

@@ -1,0 +1,1 @@
+extern int speaker_activate(void);

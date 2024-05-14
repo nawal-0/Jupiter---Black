@@ -22,7 +22,11 @@ function CustomButton({text, socket}) {
 
     const onClick = () => {
         //console.log('Button clicked');
-        socket.emit('buttonClicked', text + '\n');
+        if (text === 'Start') {
+            socket.emit('buttonClicked', 'dev_power on\n');
+        } else {
+            socket.emit('buttonClicked', 'dev_power off\n');
+        }
     }
 
     return (

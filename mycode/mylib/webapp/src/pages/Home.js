@@ -6,6 +6,7 @@ import CustomButton from '../components/custom-button';
 import CustomInput from '../components/custom-entry';
 import icons from '../data/icons';
 
+//const terms = ['sit', 'stand', 'walk', 'run', ];
 const socket = io('http://localhost:3001');
 
 export default function Home() {
@@ -16,14 +17,40 @@ export default function Home() {
 
     useEffect(() => {
         socket.on('serialData', (data) => {
-            setData(data);
+            try {
+                // let stringData = '{state: "0001", energy: "50"}';
+                // let match = stringData.match(/\{.*\}/);
+                let match = data.match(/\{.*\}/);
+                console.log(match[0]);
+                let parsedData = JSON.parse(match[0]);
+                
+                if (parsedData.energy != null) {
+                    setEnergy(parsedData.energy);
+                }
+                if (parsedData.state != null) {
+                    let state = parsedData.state;
+                    if (state === 'sit') {
+                        setData('Sitting');
+                    } else if (state === 'stand') {
+                        setData('Standing');
+                    } else if (state === 'walk') {
+                        setData('Walking');
+                    } else if (state === 'run') {
+                        setData('Running');
+                    }
+                }
+            } catch (e) {
+                console.log('Error parsing JSON:', e);
+
+            }
+            //setData(data);
             //console.log('Data received from server:', data);
         });
     }, []);
 
     const onEntryChange = (e) => {
         setWeight(e.target.value);
-        socket.emit('buttonClicked', e.target.value + '\n');
+        socket.emit('buttonClicked', "send_weight " + e.target.value + '\n');
     }
 
     return (
@@ -34,10 +61,10 @@ export default function Home() {
                 <h1 className='title'>Activity Classification</h1>
                 <h3>{data}</h3>
                 <div className='icon-container'>
-                    <ActivityIcon image={icons.sitImage} encoding={"0000"} data={data} />
-                    <ActivityIcon image={icons.standImage} encoding={"LED state: ON"} data={data} />
-                    <ActivityIcon image={icons.walkImage} encoding={"0010"} data={data} />
-                    <ActivityIcon image={icons.runImage} encoding={"0011"} data={data} />
+                    <ActivityIcon image={icons.sitImage} encoding={"Sitting"} data={data} />
+                    <ActivityIcon image={icons.standImage} encoding={"Standing"} data={data} />
+                    <ActivityIcon image={icons.walkImage} encoding={"Walking"} data={data} />
+                    <ActivityIcon image={icons.runImage} encoding={"Running"} data={data} />
                 </div>
             </div>
             <Divider orientation='vertical' flexItem />

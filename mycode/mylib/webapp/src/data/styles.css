@@ -1,7 +1,7 @@
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
 
-/* Variable assignments for light and dark mode #c6d7f7 */
 :root {
   --black: #100318;
   --grayPurple: #525469;
@@ -33,10 +33,16 @@ a:not(.header-icon-link) {
   font-family: 'Major Mono Display';
 }
 
-h2,
+
 h3,
 input {
   font-family: 'Major Mono Display';
+}
+
+h2 {
+  font-family: 'Black Han Sans';
+  font-weight: 300;
+  font-size: 30px;
 }
 
 h4 {
@@ -54,6 +60,8 @@ p {
   color: var(--fgColour);
   padding-top: 2rem;
   padding-bottom: 1rem;
+  font-family: "Black Han Sans";
+  font-weight: 300;
 }
 
 h3 {
@@ -76,6 +84,10 @@ h3 {
 .page-header * {
   background-color: transparent;
   padding-left: 3%;
+}
+
+.page-header h2 {
+  font-family: 'Major Mono Display';
 }
 
 .page-footer {

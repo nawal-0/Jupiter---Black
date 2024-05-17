@@ -10,7 +10,7 @@ import icons from '../data/icons';
 const socket = io('http://localhost:3001');
 
 export default function Home() {
-    const [data, setData] = useState('hello');
+    const [data, setData] = useState("Press the button to start!");
     const [weight, setWeight] = useState('0');
     const [energy, setEnergy] = useState('0');
 
@@ -58,7 +58,7 @@ export default function Home() {
         
         <div className='main-container'>
             <div className='left-container'>
-                <h1 className='title'>Activity Classification</h1>
+                <h1 className='title'>ACTIVITY  CLASSIFICATION</h1>
                 <h3>{data}</h3>
                 <div className='icon-container'>
                     <ActivityIcon image={icons.sitImage} encoding={"Sitting"} data={data} />
@@ -75,15 +75,15 @@ export default function Home() {
                 </div>
                 <Divider flexItem />
                 <div className='info-container'>
-                    <h2>Activity Information</h2>
+                    <h2>ACTIVITY INFORMATION</h2>
 
                     <CustomInput 
                         placeholder="Enter weight (kg)" 
                         type="text" 
                         onChange={onEntryChange} />
                 
-                    <h3>Weight: {weight}</h3>
-                    <h3>Energy Used: {energy}</h3>
+                    <h3>Weight: {weight + " kg"}</h3>
+                    <h3>Energy Used: {energy + " calories"}</h3>
                 </div>
             </div>
 

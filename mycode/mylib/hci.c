@@ -20,6 +20,7 @@
 
 // #define STATIC_ADDR [6] { 0x11, 0x22, 0x33, 0x44, 0x55, 0x66 };
 static char *actions[4] = {"stand", "walk", "run", "sit"};
+int energy_mode = 0;
 
 bt_addr_le_t static_addr;
 
@@ -141,8 +142,8 @@ void cmd_dev_power(const struct shell *sh, size_t argc, char **argv)
     }
     if (encode > -1)
     {
-        data.major_2 = 1;
-        data.minor_2 = encode;
+        data.major_2 = 1 + encode;
+        // data.minor_2 = encode;
         while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
         {
             // If the queue is full, wait for 500ms before trying again.
@@ -154,20 +155,80 @@ void cmd_dev_power(const struct shell *sh, size_t argc, char **argv)
 void cmd_send_weight(const struct shell *sh, size_t argc, char **argv)
 {
 
-    if (argc != 2)
+    if (argc != 3)
     {
         printk("invalid number of arguments");
         return;
     }
     struct data_ibeacon data;
-    data.major_2 = 2;
+    data.major_2 = 3;
     data.minor_2 = atoi(argv[1]);
+    energy_mode = 1;
     while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
     {
         // If the queue is full, wait for 500ms before trying again.
         k_sleep(K_MSEC(500));
     }
 }
+
+void cmd_stop_energy(const struct shell *sh, size_t argc, char **argv)
+{
+
+    if (argc != 2)
+    {
+        printk("invalid number of arguments");
+        return;
+    }
+    struct data_ibeacon data;
+    energy_mode = 0;
+    data.major_2 = 4;
+    while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+    {
+        // If the queue is full, wait for 500ms before trying again.
+        k_sleep(K_MSEC(500));
+    }
+}
+
+void cmd_speaker(const struct shell *sh, size_t argc, char **argv)
+{
+
+    if (argc != 1)
+    {
+        printk("invalid number of arguments");
+        return;
+    }
+    struct data_ibeacon data;
+    data.major_2 = 5;
+    while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+    {
+        // If the queue is full, wait for 500ms before trying again.
+        k_sleep(K_MSEC(500));
+    }
+    k_sleep(K_MSEC(2000));
+    data.major_2 = 0;
+    while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+    {
+        // If the queue is full, wait for 500ms before trying again.
+        k_sleep(K_MSEC(500));
+    }
+}
+
+// void cmd_off(const struct shell *sh, size_t argc, char **argv)
+// {
+
+//     if (argc != 1)
+//     {
+//         printk("invalid number of arguments");
+//         return;
+//     }
+//     struct data_ibeacon data;
+//     data.major_2 = 3;
+//     while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
+//     {
+//         // If the queue is full, wait for 500ms before trying again.
+//         k_sleep(K_MSEC(500));
+//     }
+// }
 
 void cmd_reg_mobile(const struct shell *sh, size_t argc, char **argv)
 {
@@ -185,7 +246,7 @@ void cmd_reg_mobile(const struct shell *sh, size_t argc, char **argv)
 extern int tsk_scan(void)
 {
     int err;
-    err = bt_enable(NULL);
+    // err = bt_enable(NULL);
 
     // Initialize the Bluetooth subsystem with no parameters.
     // err = bt_enable(NULL);
@@ -214,29 +275,21 @@ extern int tsk_scan(void)
         data.major_2 = (val & 0xff0000) >> 16;
         data.minor_1 = (val & 0xff00) >> 8;
         data.minor_2 = val & 0xff;
-        // data.rssi = get_rssi_data();
+        // printk("minor 2 %d", data.major_2);
+        //   data.rssi = get_rssi_data();
 
         bt_le_scan_stop();
-        //   index++;
-        //   index = index % 8;
-        //   printk("index %d", index);
-
-        // if (val >> 16 == major_list[index])
-        // if (val >> 16 == major_list[index])
-        // {
-        //     index++;
-        //     index = index % 8;
-        // printk
-        // Attempt to send the data to the iBeacon message queue for advertising.
-        // while (k_msgq_put(&ibeacon_msgq, &data, K_NO_WAIT) != 0)
-        // {
-        //     // If the queue is full, wait for 500ms before trying again.
-        //     k_sleep(K_MSEC(500));
-        // }
-        // printk("state :%d\n", data.major_2);
-        if (0 < data.major_2 && data.major_2 < 3)
+        if (-1 < data.major_2 && data.major_2 < 4)
         {
-            printk("state %s\n", actions[data.major_2]);
+            if (energy_mode)
+            {
+                int energy = data.minor_1 << 8 | data.minor_2;
+                printk("{\"state\":\"%s\", \"energy\":\"%d\"}\n", actions[data.major_2], energy);
+            }
+            else
+            {
+                printk("{\"state\":\"%s\"}\n", actions[data.major_2]);
+            }
         }
 
         k_sleep(K_MSEC(500));

@@ -20,21 +20,12 @@
 // #define SPEAKER_NODE DT_NODELABEL(spk_pwr)
 // const struct DT_LABEL(DT_ALIAS(spk0))
 // static const struct pwm_dt_spec pwm_spk = PWM_DT_SPEC_GET(DT_ALIAS(spk0));
+// static const struct pwm_dt_spec pwm = PWM_DT_SPEC_GET(DT_NODELABEL(spk_pwr));
+// static const struct gpio_dt_spec sw0_gpio = GPIO_DT_SPEC_GET(DT_ALIAS(pwm_0), gpios);
 
-extern int speaker_activate(void)
+const struct device *pwm_dev;
+extern int speaker_init(void)
 {
-    const struct device *pwm_dev;
-    int ret;
-
-    // // Initialize PWM device
-    // pwm_dev = device_get_binding("spk_pwr");
-    // if (!pwm_dev)
-    // {
-    //     printk("Cannot find PWM device\n");
-    //     return;
-    // }
-    int gpio_pin;
-    struct device *gpio_dev;
 
     // Get the struct device for the speaker node
     // pwm_dev = device_get_binding(SPEAKER_NODE);
@@ -45,83 +36,35 @@ extern int speaker_activate(void)
         printk("Failed to get device for speaker\n");
         return -ENODEV;
     }
+}
 
-    // // Get the GPIO controller device
-    // gpio_dev = device_get_binding(DT_GPIO_LABEL(SPEAKER_NODE, enable_gpios));
-    // if (!gpio_dev)
-    // {
-    //     printk("Failed to get GPIO controller\n");
-    //     return -ENODEV;
-    // }
+extern int speaker_activate(void)
+{
+    int ret = 0;
 
-    // // Get the GPIO pin number
-    // gpio_pin = DT_GPIO_PIN(SPEAKER_NODE, enable_gpios);
-
-    // // Set up GPIO pin
-    // ret = gpio_pin_configure(gpio_dev, gpio_pin, GPIO_DIR_OUT);
-    // if (ret)
-    // {
-    //     printk("Failed to configure GPIO pin\n");
-    //     return ret;
-    // }
-
-    // // Register GPIO callback
-    // gpio_init_callback(&gpio_cb, gpio_callback, BIT(gpio_pin));
-    // ret = gpio_add_callback(gpio_dev, &gpio_cb);
-    // if (ret)
-    // {
-    //     printk("Failed to add GPIO callback\n");
-    //     return ret;
-    // }
-
-    // // Enable GPIO interrupt
-    // ret = gpio_pin_enable_callback(gpio_dev, gpio_pin);
-    // if (ret)
-    // {
-    //     printk("Failed to enable GPIO interrupt\n");
-    //     return ret;
-    // }
-
-    // struct audio_codec_cfg *cfg;
-    // cfg->mclk_freq = 1000;
-
-    // audio_codec_configure(pwm_dev, cfg);
-
-    // audio_codec_start_output(pwm_dev);
-    // k_sleep(K_SECONDS(1));
-    // audio_codec_stop_output(pwm_dev);
-    // // Configure PWM parameters
-    // struct pwm_config pwm_cfg = {
-    //     .period = 20000,        // Set period (in microseconds), corresponds to 50Hz
-    //     .pulse_width = 10000,   // Set pulse width (in microseconds), corresponds to 50% duty cycle
-    //     .flags = PWM_DS_INVERT, // Set flags for PWM operation
-    // };
-
-    // Set the frequency
-    ret = pwm_set(pwm_dev, 0, 2000, 1500, PWM_POLARITY_INVERTED); // Set PWM parameters for channel 0
-    // ret = pwm_set(&pwm_spk, 1000, 10000);
+    ret = pwm_set(pwm_dev, 0, 3000, 1500, PWM_POLARITY_NORMAL); // Set PWM parameters for channel 0
+    // ret = gpio_pin_configure(gpio_dev, 29, GPIO_OUTPUT_ACTIVE | GPIO_ACTIVE_HIGH);
+    // ret = gpio_pin_set_dt(gpio_dev, 1);
+    // pwm_set_dt(&pwm, 2000, 1000);
+    //  ret = pwm_set(&pwm_spk, 1000, 10000);
     if (ret < 0)
     {
         printk("Error setting PWM parameters%d\n", ret);
         return;
     }
+}
 
-    // // Start PWM
-    // ret = pwm_pin_start(pwm_dev, 0); // Start PWM output on channel 0
-    // if (ret < 0)
-    // {
-    //     printk("Error starting PWM\n");
-    //     return;
-    // }
+extern int speaker_deactivate(void)
+{
+    int ret = 0;
 
-    // // Delay or perform other operations as needed
-    // k_sleep(K_SECONDS(5)); // For example, sleep for 5 seconds
-
-    // // Stop PWM
-    // ret = pwm_pin_stop(pwm_dev, 0); // Stop PWM output on channel 0
-    // if (ret < 0)
-    // {
-    //     printk("Error stopping PWM\n");
-    //     return;
-    // }
+    ret = pwm_set(pwm_dev, 0, 3000, 0, PWM_POLARITY_NORMAL); // Set PWM parameters for channel 0INVERTED
+    // ret = gpio_pin_set_dt(gpio_dev, 1);
+    //  pwm_set_pulse_dt(&pwm, 0);
+    //   ret = pwm_set(&pwm_spk, 1000, 10000);
+    if (ret < 0)
+    {
+        printk("Error setting PWM parameters%d\n", ret);
+        return;
+    }
 }

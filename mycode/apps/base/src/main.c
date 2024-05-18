@@ -42,14 +42,16 @@ LOG_MODULE_REGISTER(main);
 // SHELL_STATIC_SUBCMD_SET_CREATE(led_handler,
 //                                SHELL_CMD_ARG(s, NULL, "Set led", cmd_set_led, 2, 0),
 //                                SHELL_CMD_ARG(t, NULL, "Toggle led", cmd_toggle_led, 2, 0),
-//                                SHELL_SUBCMD_SET_END /* Array terminated. */
+//                                SHELL_SUBCMD_SET_END /* Array terminated. dev_power on*/
 // );
 // SHELL_CMD_REGISTER(led, &led_handler, "LED handler", NULL);
 // SHELL_CMD_REGISTER(time, NULL, "timer display", &cmd_time);
 SHELL_CMD_REGISTER(mobile_addr, NULL, "register address", &cmd_reg_mobile);
 SHELL_CMD_REGISTER(dev_power, NULL, "device power", &cmd_dev_power);
 SHELL_CMD_REGISTER(send_weight, NULL, "send weight", &cmd_send_weight);
-// SHELL_CMD_REGISTER(view_node, NULL, "view node", &view_node);
+SHELL_CMD_REGISTER(speaker, NULL, "speaker", &cmd_speaker);
+// SHELL_CMD_REGISTER(stop_energy, NULL, "send weight", &cmd_send_weight);
+//   SHELL_CMD_REGISTER(view_node, NULL, "view node", &view_node);
 
 // Register thread
 // K_THREAD_DEFINE(led_id, STACKSIZE, thread_led, NULL, NULL, NULL,

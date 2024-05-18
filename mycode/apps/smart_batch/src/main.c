@@ -20,7 +20,15 @@
 // Register sensor sampling and ibeacon task
 K_THREAD_DEFINE(ibeacon_id, STACKSIZE, tsk_ibeacon, NULL, NULL, NULL,
                 PRIORITY, 0, 0);
-// K_THREAD_DEFINE(sensor_id, STACKSIZE, tsk_scan, NULL, NULL, NULL,
-//                 PRIORITY, 0, 0);
+K_THREAD_DEFINE(scan_id, STACKSIZE, tsk_scan, NULL, NULL, NULL,
+                PRIORITY, 0, 0);
 K_THREAD_DEFINE(sensor_id, STACKSIZE, tsk_sensor, NULL, NULL, NULL,
                 PRIORITY, 0, 0);
+
+int main(void)
+{
+    // speaker_activate();
+    // k_msleep(1000);
+    // speaker_deactivate();
+    // return 0;
+}

@@ -6,12 +6,12 @@ import CustomButton from '../components/custom-button';
 import CustomInput from '../components/custom-entry';
 import icons from '../data/icons';
 
-//const terms = ['sit', 'stand', 'walk', 'run', ];
 const socket = io('http://localhost:3001');
 
 export default function Home() {
     const [data, setData] = useState("Press the button to start!");
     const [weight, setWeight] = useState('0');
+    const [height, setHeight] = useState('0');
     const [energy, setEnergy] = useState('0');
 
 
@@ -48,10 +48,11 @@ export default function Home() {
         });
     }, []);
 
-    const onEntryChange = (e) => {
-        setWeight(e.target.value);
-        socket.emit('buttonClicked', "send_weight " + e.target.value + '\n');
-    }
+    useEffect(() => {
+        if (weight.length >= 2 && height.length >= 3) {
+            socket.emit('buttonClicked', "send_weight " + weight + " " + height +'\n');
+        }
+    }, [weight, height]);
 
     return (
         <div>
@@ -80,10 +81,16 @@ export default function Home() {
                     <CustomInput 
                         placeholder="Enter weight (kg)" 
                         type="text" 
-                        onChange={onEntryChange} />
+                        onChange={(e) => setWeight(e.target.value)} />
+                    
+                    <CustomInput
+                        placeholder="Enter height (cm)"
+                        type="text"
+                        onChange={(e) => setHeight(e.target.value)} />
                 
-                    <h3>Weight: {weight + " kg"}</h3>
-                    <h3>Energy Used: {energy + " calories"}</h3>
+                    <h3>weight: {weight + " kg"}</h3>
+                    <h3>height: {height + " cm"}</h3>
+                    <h3>Energy used: {energy + " calories"}</h3>
                 </div>
             </div>
 

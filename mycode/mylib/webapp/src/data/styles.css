@@ -71,6 +71,7 @@ h3 {
 /* Header and Footer Styles */
 .page-header {
   background-image: linear-gradient(var(--black), var(--grayPurple));
+  /* background-color: var(--black); */
   width: 100%;
   position: sticky;
   display: flex;

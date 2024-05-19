@@ -12,20 +12,19 @@ export default function Home() {
     const [data, setData] = useState("Press the button to start!");
     const [weight, setWeight] = useState('0');
     const [height, setHeight] = useState('0');
-    const [energy, setEnergy] = useState('0');
+    const [energy, setEnergy] = useState(0);
 
 
     useEffect(() => {
         socket.on('serialData', (data) => {
             try {
-                // let stringData = '{state: "0001", energy: "50"}';
-                // let match = stringData.match(/\{.*\}/);
                 let match = data.match(/\{.*\}/);
                 console.log(match[0]);
                 let parsedData = JSON.parse(match[0]);
                 
                 if (parsedData.energy != null) {
-                    setEnergy(parsedData.energy);
+                    let accumulatedEnergy = energy + (parseInt(parsedData.energy)/1000);
+                    setEnergy(Math.round(accumulatedEnergy * 100) / 100);
                 }
                 if (parsedData.state != null) {
                     let state = parsedData.state;
@@ -43,10 +42,8 @@ export default function Home() {
                 console.log('Error parsing JSON:', e);
 
             }
-            //setData(data);
-            //console.log('Data received from server:', data);
         });
-    }, []);
+    }, [energy]);
 
     useEffect(() => {
         if (weight.length >= 2 && height.length >= 3) {
@@ -73,6 +70,7 @@ export default function Home() {
                 <div className='button-container'>
                     <CustomButton text="Start" socket={socket}/>
                     <CustomButton text="Stop" socket={socket} />
+                    <CustomButton text="Speaker" socket={socket} />
                 </div>
                 <Divider flexItem />
                 <div className='info-container'>
@@ -90,7 +88,7 @@ export default function Home() {
                 
                     <h3>weight: {weight + " kg"}</h3>
                     <h3>height: {height + " cm"}</h3>
-                    <h3>Energy used: {energy + " calories"}</h3>
+                    <h3>Energy used: {energy.toString() + " kcal"}</h3>
                 </div>
             </div>
 

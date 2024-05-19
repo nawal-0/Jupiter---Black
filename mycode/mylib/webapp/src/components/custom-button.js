@@ -1,11 +1,12 @@
 import React from "react";
 import styled from 'styled-components';
 
+// padding - button's height, width
 const Button = styled.button`
     background-color: #0d273b;
     border: none;
     color: white;
-    padding: 25px 72px;
+    padding: 25px 45px; 
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -24,8 +25,10 @@ function CustomButton({text, socket}) {
         //console.log('Button clicked');
         if (text === 'Start') {
             socket.emit('buttonClicked', 'dev_power on\n');
-        } else {
+        } else if (text === 'Stop'){
             socket.emit('buttonClicked', 'dev_power off\n');
+        } else {
+            socket.emit('buttonClicked', 'speaker\n');
         }
     }
 
